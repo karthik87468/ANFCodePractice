@@ -25,16 +25,6 @@ class URLParams {
         self.urlComponents = components
     }
 
-    /// Add a query parameter to the URL
-    /// - Parameters:
-    ///   - key: The name of the query parameter
-    ///   - value: The value of the query parameter
-    func addParam(key: String, value: String) {
-        var queryItems = urlComponents.queryItems ?? []
-        queryItems.append(URLQueryItem(name: key, value: value))
-        urlComponents.queryItems = queryItems
-    }
-
     /// Get the final URL with parameters
     /// - Returns: The constructed URL
     func build() -> URL? {
