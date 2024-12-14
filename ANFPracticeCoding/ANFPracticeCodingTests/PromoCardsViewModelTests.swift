@@ -7,7 +7,7 @@
 
 import XCTest
 import Combine
-@testable import ANFPracticeCoding // Replace with your module name
+@testable import ANFPracticeCoding
 
 final class PromoCardsViewModelTests: XCTestCase {
     private var viewModel: PromoCardsViewModel!
@@ -55,13 +55,12 @@ final class PromoCardsViewModelTests: XCTestCase {
         ]
         """.data(using: .utf8)!
         
-        mockNetworkManager.mockData = mockJSON // Set mock data
+        mockNetworkManager.mockData = mockJSON
         
-        // Expectation for async call
         let expectation = self.expectation(description: "Load Promo Cards")
         
         viewModel.$promoCards
-            .dropFirst() // Ignore the initial empty state
+            .dropFirst()
             .sink { promoCards in
                 XCTAssertEqual(promoCards.count, 2, "Expected two promo cards")
                 XCTAssertEqual(promoCards.first?.title, "Promo Card 1", "First promo card title mismatch")
@@ -78,24 +77,20 @@ final class PromoCardsViewModelTests: XCTestCase {
     }
 
     func testLoadPromoCards_Failure() {
-        // Mock an error
         mockNetworkManager.mockError = URLError(.notConnectedToInternet)
         
-        // Expectation for async error handling
         let expectation = self.expectation(description: "Handle Error Gracefully")
-        expectation.isInverted = true // We don't expect promoCards to change
+        expectation.isInverted = true
         
         viewModel.$promoCards
-            .dropFirst() // Ignore the initial empty state
+            .dropFirst()
             .sink { promoCards in
                 XCTFail("promoCards should not change when an error occurs")
             }
             .store(in: &cancellables)
         
-        // Trigger the API call
         viewModel.loadPromoCards()
         
-        // Wait to ensure no changes occur
         wait(for: [expectation], timeout: 1.0)
     }
 }
