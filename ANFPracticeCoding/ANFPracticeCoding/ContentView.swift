@@ -39,10 +39,10 @@ struct PromoCardView: View {
                     .font(.system(size: 11))
                     .foregroundColor(.red)
                 
-                Text(card.bottomDescription ?? "")
-                    .font(.system(size: 13))
-                    .foregroundColor(.gray)
-            }
+                HTMLTextView(htmlContent: card.bottomDescription ?? "").padding()         .frame(maxWidth: 200)
+
+            }.frame(maxWidth: .infinity, alignment: .center)
+
          
             if let content = card.content {
                 ForEach(content.indices, id: \.self) { index in
@@ -107,3 +107,49 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+
+
+
+struct HTMLTextView: UIViewRepresentable {
+    let htmlContent: String
+    
+    class Coordinator: NSObject, UITextViewDelegate {
+        func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+            UIApplication.shared.open(URL)
+            return true
+        }
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+    
+    func makeUIView(context: Context) -> UITextView {
+        let textView = UITextView()
+        textView.isEditable = false
+        textView.isSelectable = true
+        textView.isScrollEnabled = false
+        textView.dataDetectorTypes = .link
+        textView.textContainerInset = .zero
+        textView.textContainer.lineFragmentPadding = 0
+        textView.backgroundColor = .clear
+        textView.delegate = context.coordinator // Set the delegate
+        return textView
+    }
+    
+    func updateUIView(_ uiView: UITextView, context: Context) {
+        let data = Data(htmlContent.utf8)
+        if let attributedString = try? NSAttributedString(
+            data: data,
+            options: [.documentType: NSAttributedString.DocumentType.html,
+                      .characterEncoding: String.Encoding.utf8.rawValue],
+            documentAttributes: nil
+        ) {
+            uiView.attributedText = attributedString
+        } else {
+            uiView.text = htmlContent
+        }
+    }
+}
+
