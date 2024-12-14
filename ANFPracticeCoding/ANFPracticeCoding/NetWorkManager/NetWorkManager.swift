@@ -21,8 +21,8 @@ import Foundation
 import Combine
 
 class NetworkManager: NetworkManagerProtocol {
-    static let shared = NetworkManager() // Singleton instance
-    private init() {} // Prevent external initialization
+    static let shared = NetworkManager() 
+    private init() {}
 
     func fetchData(with request: URLRequest) -> AnyPublisher<Data, Error> {
         return URLSession.shared.dataTaskPublisher(for: request)

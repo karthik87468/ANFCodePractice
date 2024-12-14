@@ -35,7 +35,6 @@ class PromoCardsViewModel: ObservableObject {
     }
 
     func loadPromoCards() {
-        // Create the URLRequest
         if let finalURL = URLParams().build() {
             var request = URLRequest(url: finalURL)
             request.httpMethod = "GET"

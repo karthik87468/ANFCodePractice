@@ -17,8 +17,7 @@ struct Constants {
 class URLParams {
     private var urlComponents: URLComponents
 
-    /// Initialize with a base URL
-    /// - Parameter baseURL: The base URL as a string
+
     init(baseURL: String = Constants.API.baseURL) {
         guard let components = URLComponents(string: baseURL) else {
             fatalError("Invalid base URL")
