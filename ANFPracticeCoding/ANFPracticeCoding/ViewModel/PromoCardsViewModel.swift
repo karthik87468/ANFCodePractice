@@ -17,7 +17,7 @@ struct PromoCard: Codable, Identifiable {
     let bottomDescription: String?
     let content: [ContentItem]?
     
-    struct ContentItem: Codable, Identifiable {
+    struct ContentItem: Codable, Identifiable, Equatable {
         let id = UUID()
         let title: String?
         let target: String?

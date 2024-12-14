@@ -43,37 +43,43 @@ struct PromoCardView: View {
                     .font(.system(size: 13))
                     .foregroundColor(.gray)
             }
-            
-            
+         
             if let content = card.content {
-                ForEach(content) {  item in
-                    Button(action: {
-                        print("button pressed")
-                        if let url = URL(string: item.target ?? "") {
-                            UIApplication.shared.open(url)
-                        }
-                    }) {
-                        VStack {
-                            Text(item.title ?? "No Title")
-                                .foregroundColor(.black)
-                                .padding()
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading) // Left align the content
-                        .background(Color.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 0)
-                                .stroke(Color.black, lineWidth: 1)
-                        )
-                    }
-                    .buttonStyle(PlainButtonStyle()) // To prevent the default button style from interfering
+                ForEach(content.indices, id: \.self) { index in
+                    let item = content[index]
+                    getButton(item: item)
+                    getButton(item: item)
                 }
-            }
 
-           
+            }
+            Spacer()
         }
         .padding()
         .background(RoundedRectangle(cornerRadius: 10).fill(Color.white).shadow(radius: 3))
         .padding([.horizontal, .top])
+    }
+    
+    @ViewBuilder
+    func getButton(item: PromoCard.ContentItem) -> some View {
+        Button(action: {
+            print("button pressed")
+            if let url = URL(string: item.target ?? "") {
+                UIApplication.shared.open(url)
+            }
+        }) {
+            VStack {
+                Text(item.title ?? "No Title")
+                    .foregroundColor(.black)
+                    .padding()
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .overlay(
+                RoundedRectangle(cornerRadius: 0)
+                    .stroke(Color.black, lineWidth: 1)
+            )
+        }
+        .buttonStyle(PlainButtonStyle())
+
     }
 }
 
@@ -83,16 +89,18 @@ struct ContentView: View {
     
     var body: some View {
         ScrollView {
-            LazyVStack(spacing: 16) {
-                ForEach(viewModel.promoCards) { card in
-                    PromoCardView(card: card)
+            VStack(spacing: 16) {
+                ForEach(viewModel.promoCards.indices, id: \.self) { index in
+                    let card = viewModel.promoCards[index]
+                    PromoCardView(card: card).id(index)
                 }
             }
+            .background(Color(UIColor.systemGroupedBackground))
+            .task {
+                viewModel.loadPromoCards()
+            }
         }
-        .background(Color(UIColor.systemGroupedBackground))
-        .task {
-            viewModel.loadPromoCards()
-        }
+           
     }
 }
 

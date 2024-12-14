@@ -30,6 +30,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		250F906C2D0E1E7D00202464 /* Exceptions for "ANFPracticeCodingTests" folder in "ANFPracticeCoding" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				MockNetworkManager.swift,
+			);
+			target = 25FAB1842D0D77EA00AB24F5 /* ANFPracticeCoding */;
+		};
+		250F906D2D0E1E7D00202464 /* Exceptions for "ANFPracticeCodingTests" folder in "ANFPracticeCodingTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				MockNetworkManager.swift,
+			);
+			target = 25FAB1952D0D77EB00AB24F5 /* ANFPracticeCodingTests */;
+		};
 		25FAB1B42D0D782400AB24F5 /* Exceptions for "ANFPracticeCoding" folder in "ANFPracticeCoding" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -50,6 +64,10 @@
 		};
 		25FAB1992D0D77EB00AB24F5 /* ANFPracticeCodingTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				250F906C2D0E1E7D00202464 /* Exceptions for "ANFPracticeCodingTests" folder in "ANFPracticeCoding" target */,
+				250F906D2D0E1E7D00202464 /* Exceptions for "ANFPracticeCodingTests" folder in "ANFPracticeCodingTests" target */,
+			);
 			path = ANFPracticeCodingTests;
 			sourceTree = "<group>";
 		};
