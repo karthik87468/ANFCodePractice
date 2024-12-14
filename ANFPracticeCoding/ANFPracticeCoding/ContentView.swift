@@ -48,7 +48,6 @@ struct PromoCardView: View {
                 ForEach(content.indices, id: \.self) { index in
                     let item = content[index]
                     getButton(item: item)
-                    getButton(item: item)
                 }
 
             }
