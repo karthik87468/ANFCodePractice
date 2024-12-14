@@ -19,7 +19,7 @@ struct PromoCardView: View {
             AsyncImage(url: URL(string: card.backgroundImage ?? "")) { image in
                 image
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
+                    .aspectRatio(contentMode: .fit)
             } placeholder: {
                 Color.gray.opacity(0.2)
             }
@@ -51,7 +51,6 @@ struct PromoCardView: View {
                 }
 
             }
-            Spacer()
         }
         .padding()
         .background(RoundedRectangle(cornerRadius: 10).fill(Color.white).shadow(radius: 3))
