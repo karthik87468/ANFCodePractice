@@ -110,21 +110,31 @@ struct ContentView_Previews: PreviewProvider {
 
 
 
-
 struct HTMLTextView: UIViewRepresentable {
     let htmlContent: String
-    
+
+    // Custom Coordinator to handle link taps
     class Coordinator: NSObject, UITextViewDelegate {
         func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-            UIApplication.shared.open(URL)
-            return true
+            if var decodedURLString = URL.absoluteString.removingPercentEncoding
+                {
+                if let startRange = decodedURLString.range(of: "http"),
+                   let endRange = decodedURLString.range(of: ".html") {
+                    decodedURLString = String(decodedURLString[startRange.lowerBound...endRange.upperBound])
+                    let decodedURL = NSURL(string: decodedURLString)
+                    UIApplication.shared.open(decodedURL! as URL)
+                }
+                        
+                
+            }
+            return false
         }
     }
-    
+
     func makeCoordinator() -> Coordinator {
-        Coordinator()
+        return Coordinator()
     }
-    
+
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.isEditable = false
@@ -137,7 +147,7 @@ struct HTMLTextView: UIViewRepresentable {
         textView.delegate = context.coordinator // Set the delegate
         return textView
     }
-    
+
     func updateUIView(_ uiView: UITextView, context: Context) {
         let data = Data(htmlContent.utf8)
         if let attributedString = try? NSAttributedString(
@@ -152,4 +162,3 @@ struct HTMLTextView: UIViewRepresentable {
         }
     }
 }
-
