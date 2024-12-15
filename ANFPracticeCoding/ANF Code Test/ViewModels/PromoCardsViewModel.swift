@@ -93,13 +93,3 @@ extension PromoCardsViewModel {
     }
 
 }
-extension PromoCardsViewModel.PromoCard: Equatable {
-    static func == (lhs: PromoCardsViewModel.PromoCard, rhs: PromoCardsViewModel.PromoCard) -> Bool {
-        return lhs.id == rhs.id &&
-               lhs.backgroundImage == rhs.backgroundImage &&
-               lhs.topDescription == rhs.topDescription &&
-               lhs.title == rhs.title &&
-               lhs.promoMessage == rhs.promoMessage &&
-               lhs.bottomDescription == rhs.bottomDescription
-    }
-}
