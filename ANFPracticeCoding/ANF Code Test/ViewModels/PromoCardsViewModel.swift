@@ -77,7 +77,7 @@ class PromoCardsViewModel: ObservableObject {
 
 extension PromoCardsViewModel {
     struct PromoCard: Codable, Identifiable {
-        let id = UUID() // Unique ID for SwiftUI List
+        let id = UUID()
         let backgroundImage: String?
         let topDescription: String?
         let title: String?

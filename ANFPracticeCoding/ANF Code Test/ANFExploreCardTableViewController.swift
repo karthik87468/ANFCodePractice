@@ -14,7 +14,9 @@ class ANFExploreCardTableViewController: UITableViewController {
     }
     var viewModel = PromoCardsViewModel()
     private var cancellables = Set<AnyCancellable>()
-
+    
+    let reuseeIdentifier = "ExploreContentCell"
+    
     init(viewModel: PromoCardsViewModel = PromoCardsViewModel())  {
         super.init(style: .plain)
         self.viewModel = viewModel
@@ -26,12 +28,12 @@ class ANFExploreCardTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.register(ExploreContentCell.self, forCellReuseIdentifier: "ExploreContentCell")
+        self.tableView.register(ExploreContentCell.self, forCellReuseIdentifier: reuseeIdentifier)
         viewModel.loadPromoCards()
         viewModel.$promoCards.sink { [weak self] cards in
             self?.promoCards = cards
         }.store(in: &cancellables)
-
+        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -40,7 +42,7 @@ class ANFExploreCardTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard  let cell = self.tableView.dequeueReusableCell(withIdentifier: "ExploreContentCell", for: indexPath) as? ExploreContentCell else {
+        guard  let cell = self.tableView.dequeueReusableCell(withIdentifier: reuseeIdentifier, for: indexPath) as? ExploreContentCell else {
             return  UITableViewCell()
         }
         cell.model = promoCards[indexPath.row]

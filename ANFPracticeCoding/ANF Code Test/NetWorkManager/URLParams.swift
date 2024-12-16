@@ -12,8 +12,6 @@ struct Constants {
         static let baseURL = "https://www.abercrombie.com/anf/nativeapp/qa/codetest/codeTest_exploreData.css"
     }
 }
-
-
 class URLParams {
     private var urlComponents: URLComponents
 
